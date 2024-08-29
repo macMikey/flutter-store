@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:store/src/global_variables.dart';
+import 'package:store/src/widgets/product_card.dart';
+import 'package:store/src/screens/product_screen.dart';
 
 // =================================
 class HomeScreen extends StatefulWidget {
@@ -38,21 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // <header + search>
-            const Row(
+            Row(
               children: [
                 //<header>
                 Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text('Shoes\nCollection',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  padding: const EdgeInsets.all(20),
+                  child: Text('Shoes\nCollection', style: Theme.of(context).textTheme.titleLarge),
                 ),
                 // </header>
 
                 //<search>
-                Expanded(
+                const Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       border: border,
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                           backgroundColor: selectedFilter == filter
-                              ? Theme.of(context).primaryColor
+                              ? Theme.of(context).colorScheme.primary
                               : const Color.fromRGBO(245, 247, 249, 1),
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           shape: RoundedRectangleBorder(
@@ -105,6 +104,35 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             // </brand filters>
+
+            // <products>
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductScreen(product: product),
+                        ),
+                      );
+                    },
+                    child: ProductCard(
+                      title: product['title'] as String,
+                      price: product['price'] as double,
+                      image: product['imageUrl'] as String,
+                      backgroundColor: index.isEven
+                          ? const Color.fromRGBO(216, 240, 253, 1)
+                          : const Color.fromRGBO(245, 247, 249, 1),
+                    ),
+                  );
+                },
+              ),
+            )
+            // </products>
           ],
         ),
       ),
