@@ -1,0 +1,19 @@
+lib
+├── main.dart
+└── src
+    ├── models
+    │   └── product.dart
+    ├── providers
+    │   └── product_provider.dart
+    ├── screens
+    │   ├── home_screen.dart
+    │   └── product_screen.dart
+    ├── services
+    │   └── api_service.dart
+    ├── utils
+    │   └── constants.dart
+    └── widgets
+        └── product_card.dart
+-  [error opening dir]
+
+8 directories, 8 files

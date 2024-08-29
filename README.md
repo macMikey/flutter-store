@@ -1,1 +1,2 @@
-# flutter-store2
+# flutter-store
+another beginner-level flutter project
