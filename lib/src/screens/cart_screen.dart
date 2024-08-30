@@ -47,15 +47,7 @@ class CartScreenState extends State<CartScreen> {
                           trailing: IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
-                              setState(() {
-                                cart.removeAt(index);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Item removed from cart'),
-                                  duration: Duration(seconds: 1),
-                                ),
-                              );
+                              _confirmRemoval(index);
                             },
                           ),
                         );
@@ -81,6 +73,56 @@ class CartScreenState extends State<CartScreen> {
                   ),
                 ],
               ),
+      ),
+    );
+  }
+
+  Future<void> _confirmRemoval(int index) async {
+    bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirm Removal'),
+          content: const Text('Are you sure you want to remove this item from the cart?'),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black, // Text color
+                backgroundColor: Theme.of(context).primaryColor, // Button color
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black, // Text color
+                backgroundColor: Theme.of(context).primaryColor, // Button color
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Remove'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirm == true && mounted) {
+      _removeItem(index);
+    }
+  }
+
+  void _removeItem(int index) {
+    setState(() {
+      cart.removeAt(index);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Item removed from cart'),
+        duration: Duration(seconds: 1),
       ),
     );
   }
