@@ -15,12 +15,24 @@ class _HomeScreenState extends State<HomeScreen> {
   late String selectedFilter;
   String searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     filters = _generateFilters();
     selectedFilter = filters[0];
+
+    _searchFocusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchFocusNode.dispose();
+    _searchController.dispose();
+    super.dispose();
   }
 
   List<String> _generateFilters() {
@@ -30,17 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Map<String, Object>> getFilteredProducts() {
-    return products
-        .where((product) {
-          final matchesFilter = selectedFilter == 'All' || product['Company'] == selectedFilter;
-          final matchesSearchQuery = searchQuery.isEmpty ||
-              product.values.any((value) {
-                return value.toString().toLowerCase().contains(searchQuery.toLowerCase());
-              });
-          return matchesFilter && matchesSearchQuery;
-        })
-        .map((product) => product) //as Map<String, Object>)
-        .toList();
+    return products.where((product) {
+      final matchesFilter = selectedFilter == 'All' || product['Company'] == selectedFilter;
+      final matchesSearchQuery = searchQuery.isEmpty ||
+          product.values.any((value) {
+            return value.toString().toLowerCase().contains(searchQuery.toLowerCase());
+          });
+      return matchesFilter && matchesSearchQuery;
+    }).toList();
   }
 
   @override
@@ -62,11 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
+                    focusNode: _searchFocusNode,
                     decoration: InputDecoration(
                       border: border,
                       enabledBorder: border,
                       focusedBorder: border,
-                      hintText: 'Search',
+                      hintText: _searchFocusNode.hasFocus ? '' : 'Search',
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: searchQuery.isNotEmpty
                           ? IconButton(
