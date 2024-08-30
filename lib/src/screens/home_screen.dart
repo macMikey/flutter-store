@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -42,13 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
+        iconSize: 30,
+        selectedFontSize: 0, // no label
         selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedFontSize: 0, // no label
         unselectedItemColor: Colors.grey, // Set the color of unselected items
-        backgroundColor: Colors.white, // Set the background color
-        onTap: _onItemTapped,
-//        iconSize: 30, // Adjust the icon size
-        selectedFontSize: 12, // Adjust the selected font size
-        unselectedFontSize: 10, // Adjust the unselected font size
+        // Set the background color
+        onTap: _onItemTapped, // Adjust the icon size
       ),
     );
   }

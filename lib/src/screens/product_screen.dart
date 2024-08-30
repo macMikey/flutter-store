@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store/src/global_variables.dart'; // Corrected import path
 
 class ProductScreen extends StatefulWidget {
   final Map<String, Object> product;
@@ -10,15 +11,17 @@ class ProductScreen extends StatefulWidget {
 }
 
 class ProductScreenState extends State<ProductScreen> {
-  num? selectedSize = 0;
+  num? selectedSize;
   int? selectedChipIndex;
 
   @override
   Widget build(BuildContext context) {
+    final productId = widget.product['id'] as String?;
     final productTitle = widget.product['title'] as String?;
     final productImageUrl = widget.product['imageUrl'] as String?;
     final productPrice = widget.product['price'] as num?;
     final productSizes = widget.product['sizes'] as List<num>?;
+    final productCompany = widget.product['company'] as String?;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,13 +77,38 @@ class ProductScreenState extends State<ProductScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton.icon(
-                    onPressed: () {
-                      if (selectedSize != null) {
-                        debugPrint('Selected chip: $selectedSize');
-                      }
-                    },
+                    onPressed: selectedSize != null
+                        ? () {
+                            if (selectedSize != null &&
+                                productId != null &&
+                                productTitle != null &&
+                                productPrice != null &&
+                                productCompany != null &&
+                                productImageUrl != null) {
+                              cart.add({
+                                'id': productId,
+                                'title': productTitle,
+                                'price': productPrice,
+                                'size': selectedSize as num, // Ensure selectedSize is of type num
+                                'company': productCompany,
+                                'imageUrl': productImageUrl,
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Added to cart!'),
+                                ),
+                              );
+                              setState(() {
+                                selectedChipIndex = null;
+                                selectedSize = null;
+                              });
+                            }
+                          }
+                        : null, // Disable button if no size is selected
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: selectedSize != null
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.grey, // Change color if disabled
                       minimumSize: const Size(double.infinity, 50),
                       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                       shape: RoundedRectangleBorder(

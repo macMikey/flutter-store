@@ -36,14 +36,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   List<String> _generateFilters() {
-    final companyNames = products.map((product) => product['Company'] as String).toSet().toList();
+    final companyNames = products.map((product) => product['company'] as String).toSet().toList();
     companyNames.sort();
     return ['All', ...companyNames];
   }
 
   List<Map<String, Object>> getFilteredProducts() {
     return products.where((product) {
-      final matchesFilter = selectedFilter == 'All' || product['Company'] == selectedFilter;
+      final matchesFilter = selectedFilter == 'All' || product['company'] == selectedFilter;
       final matchesSearchQuery = searchQuery.isEmpty ||
           product.values.any((value) {
             return value.toString().toLowerCase().contains(searchQuery.toLowerCase());
@@ -65,7 +65,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           children: [
             // <Title>
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               child: Text('Shoes\nCollection', style: Theme.of(context).textTheme.titleLarge),
             ),
             //</Title>
@@ -143,6 +143,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ),
         //</Filters>
+
+        const SizedBox(height: 10),
 
         // <Product List>
         Expanded(

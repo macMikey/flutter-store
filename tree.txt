@@ -56,6 +56,11 @@
 │   │   ├── Lato-Bold.ttf
 │   │   └── Lato-Light.ttf
 │   └── images
+│       ├── th-1740533146.jpg
+│       ├── th-2042747994.jpg
+│       ├── th-2084767802.jpg
+│       ├── th-490403834.jpg
+│       └── th-727583928.jpg
 ├── build
 │   ├── 8dcebabe76e98cddc6cdb94d3ce3127f
 │   │   ├── _composite.stamp
@@ -74,6 +79,16 @@
 │       │   │       ├── AssetManifest.json
 │       │   │       ├── FontManifest.json
 │       │   │       ├── NOTICES.Z
+│       │   │       ├── assets
+│       │   │       │   ├── fonts
+│       │   │       │   │   ├── Lato-Bold.ttf
+│       │   │       │   │   └── Lato-Light.ttf
+│       │   │       │   └── images
+│       │   │       │       ├── th-1740533146.jpg
+│       │   │       │       ├── th-2042747994.jpg
+│       │   │       │       ├── th-2084767802.jpg
+│       │   │       │       ├── th-490403834.jpg
+│       │   │       │       └── th-727583928.jpg
 │       │   │       ├── fonts
 │       │   │       │   └── MaterialIcons-Regular.otf
 │       │   │       ├── isolate_snapshot_data
@@ -136,6 +151,16 @@
 │       │   │   │   │       ├── AssetManifest.json
 │       │   │   │   │       ├── FontManifest.json
 │       │   │   │   │       ├── NOTICES.Z
+│       │   │   │   │       ├── assets
+│       │   │   │   │       │   ├── fonts
+│       │   │   │   │       │   │   ├── Lato-Bold.ttf
+│       │   │   │   │       │   │   └── Lato-Light.ttf
+│       │   │   │   │       │   └── images
+│       │   │   │   │       │       ├── th-1740533146.jpg
+│       │   │   │   │       │       ├── th-2042747994.jpg
+│       │   │   │   │       │       ├── th-2084767802.jpg
+│       │   │   │   │       │       ├── th-490403834.jpg
+│       │   │   │   │       │       └── th-727583928.jpg
 │       │   │   │   │       ├── fonts
 │       │   │   │   │       │   └── MaterialIcons-Regular.otf
 │       │   │   │   │       ├── isolate_snapshot_data
@@ -210,6 +235,16 @@
 │               │   │       ├── AssetManifest.json
 │               │   │       ├── FontManifest.json
 │               │   │       ├── NOTICES.Z
+│               │   │       ├── assets
+│               │   │       │   ├── fonts
+│               │   │       │   │   ├── Lato-Bold.ttf
+│               │   │       │   │   └── Lato-Light.ttf
+│               │   │       │   └── images
+│               │   │       │       ├── th-1740533146.jpg
+│               │   │       │       ├── th-2042747994.jpg
+│               │   │       │       ├── th-2084767802.jpg
+│               │   │       │       ├── th-490403834.jpg
+│               │   │       │       └── th-727583928.jpg
 │               │   │       ├── fonts
 │               │   │       │   └── MaterialIcons-Regular.otf
 │               │   │       ├── isolate_snapshot_data
@@ -252,7 +287,6 @@
 │               ├── Runner
 │               └── _CodeSignature
 │                   └── CodeResources
-├── flutter-store-tree.txt
 ├── ios
 │   ├── Flutter
 │   │   ├── AppFrameworkInfo.plist
@@ -318,19 +352,21 @@
 ├── lib
 │   ├── main.dart
 │   └── src
+│       ├── global_variables.dart
 │       ├── models
 │       │   └── product.dart
 │       ├── providers
 │       │   └── product_provider.dart
 │       ├── screens
+│       │   ├── cart_screen.dart
 │       │   ├── home_screen.dart
-│       │   └── product_screen.dart
+│       │   ├── product_screen.dart
+│       │   └── products_screen.dart
 │       ├── services
 │       │   └── api_service.dart
 │       ├── utils
 │       │   └── constants.dart
 │       └── widgets
-│           ├── app_bar.dart
 │           └── product_card.dart
 ├── linux
 │   ├── CMakeLists.txt
@@ -427,4 +463,4 @@
         ├── win32_window.cpp
         └── win32_window.h
 
-139 directories, 289 files
+148 directories, 316 files
