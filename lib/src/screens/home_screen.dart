@@ -3,6 +3,7 @@ import 'package:store/src/global_variables.dart';
 import 'package:store/src/widgets/product_card.dart';
 import 'package:store/src/screens/product_screen.dart';
 
+// ================== HomeScreen ==================
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -10,13 +11,16 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+// ================== _HomeScreenState ==================
 class _HomeScreenState extends State<HomeScreen> {
   late List<String> filters;
   late String selectedFilter;
   String searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+  int currentPage = 0;
 
+  // ------------------ initState ------------------
   @override
   void initState() {
     super.initState();
@@ -28,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // ------------------ dispose ------------------
   @override
   void dispose() {
     _searchFocusNode.dispose();
@@ -35,12 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  // ------------------ _generateFilters ------------------
   List<String> _generateFilters() {
     final companyNames = products.map((product) => product['Company'] as String).toSet().toList();
     companyNames.sort();
     return ['All', ...companyNames];
   }
 
+  // ------------------ getFilteredProducts ------------------
   List<Map<String, Object>> getFilteredProducts() {
     return products.where((product) {
       final matchesFilter = selectedFilter == 'All' || product['Company'] == selectedFilter;
@@ -52,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
+  // ------------------ build ------------------
   @override
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(
@@ -62,12 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // <Title and Search>
             Row(
               children: [
+                // <Title>
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Text('Shoes\nCollection', style: Theme.of(context).textTheme.titleLarge),
                 ),
+                //</Title>
+
+                // <Search>
                 Expanded(
                   child: TextField(
                     controller: _searchController,
@@ -97,8 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
+                //</Search>
               ],
             ),
+            // </Title and Search>
+
+            // <Filters>
             SizedBox(
               height: 50,
               child: ListView.builder(
@@ -135,6 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
+            // </Filters>
+
+            // <Products>
             Expanded(
               child: ListView.builder(
                 itemCount: getFilteredProducts().length,
@@ -160,10 +180,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-            )
-          ],
+            ),
+            // </Products>
+
+            const SizedBox(height: 10),
+          ], // children
         ),
       ),
+
+      // <BottomNavigationBar>
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+        currentIndex: currentPage,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: '',
+          ),
+        ], // items
+        onTap: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        }, // onTap
+      ),
+      // </BottomNavigationBar>
     );
   }
 }
